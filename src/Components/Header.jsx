@@ -161,7 +161,7 @@ const Header=(props)=> {
             
           </Typography>
                
-               <Button startIcon={<VpnKey style={{color: "blue"}} />}variant="contained" onClick={()=> handleButtonClick('/adminlogin')} >Sign Out</Button>
+               <Button style={{backgroundColor:"#de6310"}}  startIcon={<VpnKey style={{color: "white",}} />}variant="contained" onClick={()=> handleButtonClick('/adminlogin')} >Sign Out</Button>
                   </div>
 
               </div>
