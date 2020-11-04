@@ -1,4 +1,4 @@
-import { TextField } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import React, { useState } from 'react'
 
 export default function SelectRoom() {
@@ -6,7 +6,7 @@ export default function SelectRoom() {
     const [roomName, setRoomName] = useState("");
 
     const handleRoomID = (e)=>{
-        setEmail(e.target.value); 
+        setroomID(e.target.value); 
         console.log(roomID);
    }
    const handleRoomName = (e)=>{
@@ -20,12 +20,20 @@ export default function SelectRoom() {
 }
 const [Emailerror, setEmailError] = useState("");
 
+const openRoom=()=>{
+    
+}
+
+const joinRoom=()=>{
+
+}
+
     return (
         <div style={{width:"100%", padding:"5%"}}>
             <h2 style={{color:"#4b5a6c"}}>Join Room Live:</h2>
             
             <div className="form">
-            <form   >
+            
                     <TextField
                         variant="outlined"
                         
@@ -39,6 +47,9 @@ const [Emailerror, setEmailError] = useState("");
                         value={roomID}
                         onChange={handleRoomID}
                     />
+                    <div style={{display:"flex", justifyContent:"flex-end", marginTop:"5px"}}>
+                        <Button style={{color:"red", backgroundColor:"#f8bc5d"}} onClick={openRoom} >Open Room</Button>
+                    </div>
                     <p className="errorMsg">{Emailerror}</p>
                     <h3 style={{textAlign:"center", color:"#4b5a6c"}} >OR:</h3>
                     <h2 style={{color:"#4b5a6c"}}>Open a new Room:</h2>
@@ -55,7 +66,10 @@ const [Emailerror, setEmailError] = useState("");
                         value={roomName}
                         onChange={handleRoomName}
                     />
-                    </form>
+                    <div style={{display:"flex", justifyContent:"flex-end", marginTop:"5px"}}>
+                        <Button style={{color:"red", backgroundColor:"#f8bc5d"}} onClick={joinRoom}>Join Room</Button>
+                    </div>
+                    
             </div>
             
         </div>
