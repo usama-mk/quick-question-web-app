@@ -13,6 +13,7 @@ import { useTheme } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import { Book, Home, Image, Person, Phone, VideoLibrary, VpnKey } from '@material-ui/icons';
 import logo from '../Assets/QQ Logo.png';
+import  firebaseApp  from '../firebase';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,31 +63,17 @@ const Header=(props)=> {
     setAnchorEl(null);
   };
 
+  const logout=()=>{
+    firebaseApp.auth().signOut();
+    
+  }
+
   const menuItems = [
     {
-      menuTitle: "Images",
-      pageUrl: "/images"
+      menuTitle: "Logout",
+       
     },
-    {
-      menuTitle: "Videos",
-      pageUrl: "/videos"
-    },
-    {
-      menuTitle: "Newsletter",
-      pageUrl: "/newsletter"
-    },
-    {
-      menuTitle: "Press Releases",
-      pageUrl: "/pressreleases"
-    },
-    {
-      menuTitle: "Contact Us",
-      pageUrl: "/contactus"
-    },
-    {
-      menuTitle: "Admin Login",
-      pageUrl: "/adminlogin"
-    },
+    
   ];
 
   return (
@@ -137,11 +124,17 @@ const Header=(props)=> {
                 onClose={()=> setAnchorEl(null)}
               >
                 {menuItems.map((menuItem)=>{
-                  const {menuTitle, pageUrl} = menuItem;
+                  const {menuTitle} = menuItem;
+                 if (menuTitle=="Logout" && !(props.user)) {
+                   return ;
+                 }
+                 else{
                   return(
-                    <MenuItem onClick={()=>handleMenuClick(pageUrl)}>{menuTitle}</MenuItem>
+                    <MenuItem onClick={logout}>{menuTitle}</MenuItem>
 
                   );
+                 }
+                  
                 })}
 
                 {/* <MenuItem onClick={()=>handleMenuClick('/images')}>Images</MenuItem>
@@ -156,12 +149,12 @@ const Header=(props)=> {
 
                   <Typography variant="h6"  className={classes.title} >
                 <div style={{display:"flex", color:"#4b5a6c"}}>
-                Logged in as: Cameron
+                Logged in as: {props.user.email}
                 </div>
             
           </Typography>
-               
-               <Button style={{backgroundColor:"#de6310"}}  startIcon={<VpnKey style={{color: "white",}} />}variant="contained" onClick={()=> handleButtonClick('/adminlogin')} >Sign Out</Button>
+               {props.user? <Button style={{backgroundColor:"#de6310"}}  startIcon={<VpnKey style={{color: "white",}} />}variant="contained" onClick={logout} >Sign Out</Button>
+: <div></div> }
                   </div>
 
               </div>

@@ -1,10 +1,11 @@
 import React from 'react';
 import logo from '../../Assets/QQ Logo.png';
 import Login from '../../Components/Login';
+import SelectRoom from '../../Components/SelectRoom';
 import './Home.css'
 
 
-export default function Home() {
+export default function Home(props) {
     return (
         <div style={{display:"flex", height:"100%"}} className="mainHome">
 
@@ -26,12 +27,12 @@ export default function Home() {
             </div>
 
 
-            <div style={{width:"50%", height:"100%" , minHeight:"100%", padding:"5%"}} className="RightHome">
+            <div style={{width:"50%", height:"100%" , minHeight:"100%", padding:"3%"}} className="RightHome">
                 <h1 style={{color:"#4b5a6c"}}>
-                Log In:
+                {props.user? <h2>Enter Room:</h2> : <h2>Log In:</h2> }
                 </h1>
-              <div   style={{display:"flex" , flexDirection:"column",  alignItems:"center", justifyContent:"center" , backgroundColor:"#fbe2a0" }}>
-                 <Login/>
+              <div   style={{display:"flex" , flexDirection:"column",  alignItems:"flex-start", justifyContent:"center" , backgroundColor:"#fbe2a0" }}>
+                 {props.user? <SelectRoom/> :<Login/>}
               </div>
             </div>
         </div>

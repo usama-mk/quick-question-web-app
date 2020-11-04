@@ -12,27 +12,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import firebaseApp from '../firebase';
+import firebaseApp, { provider } from '../firebase';
 import './Login.css';
-import { Input } from '@material-ui/core';
+import { IconButton, Input } from '@material-ui/core';
  
-
-function Copyright() {
-    return ( 
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit">
-                Your Website 
-      </Link>
-      {' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
-
-
+ 
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -91,7 +75,7 @@ const handleLogin = ()=>{
             
         }
     })
-    console.log(`user is: ${user}`)
+    console.log(`user is: ${user.email}`)
 }
 
 const handleLogout= ()=>{
@@ -125,7 +109,7 @@ const handleSignup = ()=>{
 }
 
 useEffect(()=>{
-    authListener();
+    authListener(); //on app starting check if user is available or not
 },[]);
 
 
@@ -147,9 +131,16 @@ const clearErrors = ()=>{
   setEmailError('');
   setPasswordError('');
 }
+const loginWIthGoogle=()=>{
+    firebaseApp.auth().signInWithPopup(provider).then((result)=>{
+        //Auth changes which triggers onAuthStateChanged (in auth state change method ) and sets the user
+     }).catch((error)=>{
+         alert(error.message);
+     })
+}
 
     return (
-        <div>
+        <div style={{width:"100%"}}>
             { 
             
             <Container component="main" maxWidth="xs">
@@ -214,12 +205,17 @@ const clearErrors = ()=>{
               OR:
           </h2>
           </div>
-         <div style={{backgroundColor:"white", paddingLeft:"5%", paddingRight:"5%", display:"flex", justifyContent:"center", alignItems:"center" }}>
-         <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png" width="20" height="20" style={{marginRight:"15px"}}  alt="Google Logo"/>
+        
+        <div onClick={loginWIthGoogle} style={{backgroundColor:"white", height:"40px",   display:"flex", justifyContent:"center", alignItems:"center" }}>
+            <IconButton size="small">
+            <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png" width="20" height="20" style={{marginRight:"15px"}}  alt="Google Logo"/>
          <h4>
-              Login with Google
+              {signup?'Login with Google': 'Login with Google'}
           </h4>
+            </IconButton>
+        
          </div>
+       
                     { <Grid container>
                         {/* <Grid item xs>
                             <Link href="#" variant="body2">
