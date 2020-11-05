@@ -44,7 +44,7 @@ useEffect(()=>{
      <Header user={user}/>
       
       <Route exact path='/' render={()=>(<Home user={user} />)}  />
-      <Route exact path='/room' render={()=>(<Room  user={user} />)}  />
+      <Route exact path='/room/:roomid' render={()=>(<Room  user={user} />)}  />
       {/* <Route exact path='/videos' render={()=>(< Videos data={this.state.videoUrls} />)}  /> */}
       {/* <Route exact path='/newsletter' render={()=>(<Newsletter data={this.state.pdfUrls} />)}  /> */}
       {/* <Route exact path='/pressreleases' render={()=>(<PressReleases data={this.state.pdfUrls} />)}  /> */}

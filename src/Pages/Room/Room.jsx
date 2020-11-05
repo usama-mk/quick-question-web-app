@@ -1,6 +1,8 @@
 import { Button, TextField } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 import Post from '../../Components/Post'
+import { db } from '../../firebase';
 
 export default function Room() {
     const postData=[
@@ -19,6 +21,32 @@ export default function Room() {
 ]
 
 const [newPost, setNewPost]= useState("");
+const [posts, setPosts]= useState([]);
+const [roomName, setRoomName]= useState("");
+const {roomid} = useParams();
+
+useEffect(()=>{
+    db.collection("rooms").doc(roomid).onSnapshot((snapshot)=>{
+        if(snapshot.data()){
+        setRoomName(snapshot.data().roomName)
+        }
+        else{
+            alert("NO ROOM EXISTS ON THE ENTERED ID");
+        }
+    db.collection("rooms").doc(roomid).collection("posts").onSnapshot((snapshot)=>
+    { 
+        if(snapshot.docs.length!=0){
+        setPosts(snapshot.docs.map(doc => 
+            doc.data()
+            ))
+        }  
+        else{
+            
+        }               
+    })
+
+    });
+},[ ]);
 
 const handleNewPost = (e)=>{
     setNewPost(e.target.value); 
@@ -27,14 +55,16 @@ const handleNewPost = (e)=>{
         message: newPost,
         vote: 0
     }
+    // push to db
     postData.push(tempPost);
 }
+
    
     return (
         <div className="roomMain" style={{padding:"20px", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"  }}>
            <div className="roomHeader" style={roomHeaderStyle}>
                  <h1>Room ID: </h1>
-                 <h1 style={{marginLeft:"auto"}}>**Room Name**</h1>           
+    <h1 style={{marginLeft:"auto"}}>{`**${roomName}**`}</h1>           
            </div>
            <div className="roomContent" style={roomContentStyle}>
               {postData.map((currentPostData)=>{

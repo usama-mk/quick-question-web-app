@@ -4,11 +4,12 @@ import { withRouter } from 'react-router-dom';
 
  function SelectRoom(props) {
     const { history } = props;
-    const [roomID, setroomID] = useState("");
+    const [roomID, setRoomID] = useState("");
     const [roomName, setRoomName] = useState("");
+    
 
     const handleRoomID = (e)=>{
-        setroomID(e.target.value); 
+        setRoomID(e.target.value); 
         console.log(roomID);
    }
    const handleRoomName = (e)=>{
@@ -17,16 +18,31 @@ import { withRouter } from 'react-router-dom';
    }
 
    const clearInputs = ()=>{
-    setroomID('');
+    setRoomID('');
     setRoomName('');
 }
 const [Emailerror, setEmailError] = useState("");
+
+// useEffect(()=>{
+//     db.collection("rooms").doc(`${roomId}`).onSnapshot((snapshot)=>{
+//         setRoomName(snapshot.data().name)
+    
+//     db.collection("rooms").doc(roomId).collection("messages").orderBy("timeStamp" , "asc").onSnapshot((snapshot)=>
+//     (
+//         setMessages(snapshot.docs.map(doc => 
+//             doc.data()
+//             ))
+//     ))
+
+//     });
+// },[roomId]);
 
 const openRoom=(pageURL)=>{
 
 }
 
 const joinRoom=(pageURL)=>{
+   pageURL= `${pageURL}/${roomID}`;
 history.push(pageURL);
 }
 
@@ -50,7 +66,7 @@ history.push(pageURL);
                         onChange={handleRoomID}
                     />
                     <div style={{display:"flex", justifyContent:"flex-end", marginTop:"5px"}}>
-                        <Button style={{color:"red", backgroundColor:"#f8bc5d"}} onClick={openRoom} >Open Room</Button>
+                        <Button style={{color:"red", backgroundColor:"#f8bc5d"}} onClick={()=>{joinRoom("/room")}} >Open Room</Button>
                     </div>
                     <p className="errorMsg">{Emailerror}</p>
                     <h3 style={{textAlign:"center", color:"#4b5a6c"}} >OR:</h3>
@@ -69,7 +85,7 @@ history.push(pageURL);
                         onChange={handleRoomName}
                     />
                     <div style={{display:"flex", justifyContent:"flex-end", marginTop:"5px"}}>
-                        <Button style={{color:"red", backgroundColor:"#f8bc5d"}} onClick={()=>{joinRoom("/room")}}>Join Room</Button>
+                        <Button style={{color:"red", backgroundColor:"#f8bc5d"}} onClick={()=>{openRoom()}}>Join Room</Button>
                     </div>
                     
             </div>
