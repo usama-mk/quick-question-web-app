@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import Post from '../../Components/Post'
 import { db } from '../../firebase';
 
-export default function Room() {
+export default function Room(props) {
     const postData=[
     {
         message:"hello ji",
@@ -51,13 +51,21 @@ useEffect(()=>{
 const handleNewPost = (e)=>{
     setNewPost(e.target.value); 
     console.log(newPost);
-    const tempPost={
-        message: newPost,
-        vote: 0
+    
+   
     }
-    // push to db
-    postData.push(tempPost);
+
+const postToDb=()=>{
+     // push newPost to db
+     db.collection("rooms").doc(roomid).collection("posts").add({
+        post: newPost,
+        createdBy: props.user.email,
+        votes: 0
+
+    })
+    setNewPost("");
 }
+
 
    
     return (
@@ -86,7 +94,7 @@ const handleNewPost = (e)=>{
                         value={newPost}
                         onChange={handleNewPost}
                     />
-                 <Button style={submitButtonStyle}>Submit</Button>
+                 <Button style={submitButtonStyle} onClick={postToDb}>Submit</Button>
            </div>
         </div>
     )
