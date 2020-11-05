@@ -1,7 +1,9 @@
 import { Button, TextField } from '@material-ui/core';
 import React, { useState } from 'react'
+import { withRouter } from 'react-router-dom';
 
-export default function SelectRoom() {
+ function SelectRoom(props) {
+    const { history } = props;
     const [roomID, setroomID] = useState("");
     const [roomName, setRoomName] = useState("");
 
@@ -20,12 +22,12 @@ export default function SelectRoom() {
 }
 const [Emailerror, setEmailError] = useState("");
 
-const openRoom=()=>{
-    
+const openRoom=(pageURL)=>{
+
 }
 
-const joinRoom=()=>{
-
+const joinRoom=(pageURL)=>{
+history.push(pageURL);
 }
 
     return (
@@ -67,7 +69,7 @@ const joinRoom=()=>{
                         onChange={handleRoomName}
                     />
                     <div style={{display:"flex", justifyContent:"flex-end", marginTop:"5px"}}>
-                        <Button style={{color:"red", backgroundColor:"#f8bc5d"}} onClick={joinRoom}>Join Room</Button>
+                        <Button style={{color:"red", backgroundColor:"#f8bc5d"}} onClick={()=>{joinRoom("/room")}}>Join Room</Button>
                     </div>
                     
             </div>
@@ -75,3 +77,4 @@ const joinRoom=()=>{
         </div>
     )
 }
+export default withRouter(SelectRoom);
