@@ -33,17 +33,17 @@ useEffect(()=>{
         else{
             alert("NO ROOM EXISTS ON THE ENTERED ID");
         }
-    db.collection("rooms").doc(roomid).collection("posts").onSnapshot((snapshot)=>
-    { 
-        if(snapshot.docs.length!=0){
-        setPosts(snapshot.docs.map(doc => 
-            doc.data()
-            ))
-        }  
-        else{
-            
-        }               
-    })
+        db.collection("rooms").doc(roomid).collection("posts").onSnapshot((snapshot)=>
+        { 
+            if(snapshot.docs.length!=0){
+            setPosts(snapshot.docs.map(doc => 
+                doc.data()
+                ))
+            }  
+            else{
+                
+            }               
+        })
 
     });
 },[ ]);
@@ -67,9 +67,9 @@ const handleNewPost = (e)=>{
     <h1 style={{marginLeft:"auto"}}>{`**${roomName}**`}</h1>           
            </div>
            <div className="roomContent" style={roomContentStyle}>
-              {postData.map((currentPostData)=>{
+              {posts.map((currentPostData)=>{
                      
-                return   <Post message={currentPostData.message} votes={currentPostData.vote}/>
+                return   <Post message={currentPostData.post} votes={currentPostData.votes}/>
               })}
            </div>
            <div className="roomFooter" style={roomFooterStyle}>
