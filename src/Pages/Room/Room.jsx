@@ -1,6 +1,6 @@
 import { Button, TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Post from '../../Components/Post'
 import { db } from '../../firebase';
 
@@ -46,7 +46,7 @@ useEffect(()=>{
         })
 
     });
-},[ ]);
+},[]);
 
 const handleNewPost = (e)=>{
     setNewPost(e.target.value); 
@@ -66,12 +66,19 @@ const postToDb=()=>{
     setNewPost("");
 }
 
+const deleteRoom = ()=>{
+    db.collection("rooms").doc(roomid).delete();
+    //  link to home
+}
+
 
    
     return (
         <div className="roomMain" style={{padding:"20px", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"  }}>
+           <Link to="/">
+           <Button onClick={deleteRoom}>Delete Room</Button></Link>
            <div className="roomHeader" style={roomHeaderStyle}>
-                 <h1>Room ID: </h1>
+                 <h1>Room ID: {roomid} </h1>
     <h1 style={{marginLeft:"auto"}}>{`**${roomName}**`}</h1>           
            </div>
            <div className="roomContent" style={roomContentStyle}>
