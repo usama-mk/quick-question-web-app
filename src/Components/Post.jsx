@@ -12,12 +12,51 @@ export default function Post(props) {
     },[])
 
     const updatePostVotes=()=>{
+        var alreadyVoted="";
         console.log("in update votes method")
-        
-        db.collection("rooms").doc(props.roomid).collection("posts").doc(props.id).update({
-           votes: props.votes + 1
-        })
+        //retrieve posts and check if the user has upvoted already
+        db.collection("rooms").doc(props.roomid).collection("posts").doc(props.id).get()
+        .then(function(doc) {
+          if (doc.exists) {
+            if(doc.data().upvotedBy != null) {
+               for(var i = 0; i < doc.data().upvotedBy.length; i++) {
+                   if(doc.data().upvotedBy[i]==props.user.email){
+                    console.log("voters check")
+                    alreadyVoted=true;
+                    break;
+                   }
+               }
+               //If you write this function outside db.coll block it will cause problems, as db.coll takes time while executing data from db and hence alreadyVoted value doesn't update and it's already ran
+               if(!alreadyVoted){
+                //push his name into upvoters and make an upvote
+              props.upvotedBy.push(props.user.email);
+              console.log(props.upvotedBy)
+              //never use dynamic value while pushing to db, it causes problems
+              db.collection("rooms").doc(props.roomid).collection("posts").doc(props.id).update({
+                  votes: props.votes + 1,
+                  upvotedBy: props.upvotedBy
+              })
 
+            }
+
+
+            } 
+            
+             
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+        }).catch(function(error) {
+          console.log("Error getting document:", error);
+        });
+                    
+        
+
+    }
+
+    const deletePost=()=>{
+        db.collection("rooms").doc(props.roomid).collection("posts").doc(props.id).delete();
     }
 
 
@@ -25,10 +64,12 @@ export default function Post(props) {
         <div className="postComponent" style={postStyle}>
             <h3> {props.message}</h3>
             <h3 style={{marginLeft:"auto", color:"#de6310"}}>{props.votes}</h3>
-            <IconButton onClick={updatePostVotes} >
+            <IconButton onClick={updatePostVotes} id="updatePost" >
             <ArrowUpward style={{color: "#de6310"}} />
             </IconButton>
+            <IconButton onClick={deletePost}>
             <Cancel style={{color:"red", marginLeft:"10px"}}/>
+            </IconButton>
         </div>
     )
 }
