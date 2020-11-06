@@ -65,6 +65,7 @@ const Header=(props)=> {
 
   const logout=()=>{
     firebaseApp.auth().signOut();
+    history.push("/")
     
   }
 

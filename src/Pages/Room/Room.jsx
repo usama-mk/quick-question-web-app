@@ -67,7 +67,8 @@ const postToDb=()=>{
         createdBy: props.user.email,
         votes: 0,
         id: ref.id,
-        upvotedBy:[]
+        upvotedBy:[] , 
+        downgradedBy:[]
      })
     //  db.collection("rooms").doc(roomid).collection("posts").add({
     //     post: newPost,
@@ -96,7 +97,7 @@ const deleteRoom = ()=>{
            <div className="roomContent" style={roomContentStyle}>
               {posts.map((currentPostData)=>{
                      
-                return   <Post message={currentPostData.post} votes={currentPostData.votes} id={currentPostData.id} roomid={roomid} user={props.user} upvotedBy={currentPostData.upvotedBy}  />
+                return   <Post message={currentPostData.post} votes={currentPostData.votes} id={currentPostData.id} roomid={roomid} user={props.user} upvotedBy={currentPostData.upvotedBy} downgradedBy={currentPostData.downgradedBy}  />
               })}
            </div>
            <div className="roomFooter" style={roomFooterStyle}>
