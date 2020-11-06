@@ -24,6 +24,8 @@ const [newPost, setNewPost]= useState("");
 const [posts, setPosts]= useState([]);
 const [roomName, setRoomName]= useState("");
 const {roomid} = useParams();
+const [currentVotes, setCurrentVotes]= useState(0);
+const [currentPostId, setCurrentVotesId]= useState("");
 
 useEffect(()=>{
     db.collection("rooms").doc(roomid).onSnapshot((snapshot)=>{
@@ -57,12 +59,21 @@ const handleNewPost = (e)=>{
 
 const postToDb=()=>{
      // push newPost to db
-     db.collection("rooms").doc(roomid).collection("posts").add({
+     const ref = db.collection('rooms').doc(roomid).collection("posts").doc()
+     console.log(ref.id)  // prints the unique id
+
+     ref.set({
         post: newPost,
         createdBy: props.user.email,
-        votes: 0
+        votes: 0,
+        id: ref.id
+     })
+    //  db.collection("rooms").doc(roomid).collection("posts").add({
+    //     post: newPost,
+    //     createdBy: props.user.email,
+    //     votes: 0
 
-    })
+    // })
     setNewPost("");
 }
 
@@ -84,7 +95,7 @@ const deleteRoom = ()=>{
            <div className="roomContent" style={roomContentStyle}>
               {posts.map((currentPostData)=>{
                      
-                return   <Post message={currentPostData.post} votes={currentPostData.votes}/>
+                return   <Post message={currentPostData.post} votes={currentPostData.votes} id={currentPostData.id} roomid={roomid} />
               })}
            </div>
            <div className="roomFooter" style={roomFooterStyle}>
