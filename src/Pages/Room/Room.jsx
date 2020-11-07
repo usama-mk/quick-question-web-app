@@ -35,7 +35,7 @@ useEffect(()=>{
         else{
             alert("NO ROOM EXISTS ON THE ENTERED ID");
         }
-        db.collection("rooms").doc(roomid).collection("posts").onSnapshot((snapshot)=>
+        db.collection("rooms").doc(roomid).collection("posts").orderBy("votes", "desc").onSnapshot((snapshot)=>
         { 
             if(snapshot.docs.length!=0){
             setPosts(snapshot.docs.map(doc => 
@@ -43,7 +43,7 @@ useEffect(()=>{
                 ))
             }  
             else{
-                
+                setPosts([])
             }               
         })
 

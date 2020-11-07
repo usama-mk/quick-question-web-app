@@ -7,6 +7,7 @@ export default function Post(props) {
     const[message, setMessage]= useState(props.message);
     const[votes, setVotes]= useState(props.votes);
     const[downArrow, setDownArrow]= useState(true);
+    
 
     useEffect(()=>{
         
@@ -25,7 +26,7 @@ export default function Post(props) {
                  
              
          
-    },[props.downgradedBy])
+    },[])
 
     const updatePostVotes=()=>{
         var alreadyVoted="";
@@ -132,6 +133,16 @@ export default function Post(props) {
 
     const deletePost=()=>{
         db.collection("rooms").doc(props.roomid).collection("posts").doc(props.id).delete();
+        db.collection("rooms").doc(props.roomid).collection("posts").onSnapshot((snapshot)=>
+        { 
+            if(snapshot.docs.length==0){
+            console.log( "empty posts")
+
+            }  
+            else{
+                
+            }               
+        })
     }
 
 

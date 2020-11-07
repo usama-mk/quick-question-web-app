@@ -32,7 +32,7 @@ export default function Home(props) {
                 {props.user? <h2>Enter Room:</h2> : <h2>Log In:</h2> }
                 </h1>
               <div   style={{display:"flex" , flexDirection:"column",  alignItems:"flex-start", justifyContent:"center" , backgroundColor:"#fbe2a0" }}>
-                 {props.user? <SelectRoom/> :<Login/>}
+                 {props.user? <SelectRoom user={props.user}/> :<Login/>}
               </div>
             </div>
         </div>

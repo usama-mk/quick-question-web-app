@@ -43,6 +43,7 @@ const openRoom=(pageURL)=>{
         //some clever DB stuff
         db.collection('rooms').add({
             roomName: roomName,
+            roomCreatedBy: props.user.email
         })
     }
     db.collection("rooms").get().then(function(querySnapshot) {
