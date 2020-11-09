@@ -130,6 +130,8 @@ const deleteRoom = ()=>{
 const roomHeaderStyle=
 {display:"flex",
  justifyContent:"space-between",
+ overflowWrap:"break-word",
+ whiteSpace:"nowrap", overflow:"auto", borderLeft:"1em solid transparent", borderRight:"1em solid transparent", textOverflow:"ellipsis",
   backgroundColor:"#ededed", 
   padding:"5px", 
   borderRadius:"20px",

@@ -143,9 +143,10 @@ export default function Post(props) {
 
     return (
         <div className="postComponent" style={postStyle}>
-            <h3> {props.message}</h3>
-            <h3 style={{marginLeft:"auto", color:"#de6310"}}>{props.votes}</h3>
-            <IconButton onClick={updatePostVotes} id="updatePost" >
+            <h3 style={{ overflowWrap:"break-word", marginRight:"5px"}}> {props.message}</h3>
+            <h3 style={{marginLeft:"auto", color:"#de6310", padding:"5px"}}>{props.votes}</h3>
+            <div className="message-options" >
+            <IconButton style={{marginLeft:"5px"}} onClick={updatePostVotes} id="updatePost" >
             <ArrowUpward style={{color: "#de6310"}} />
             </IconButton>
         {downArrow && <IconButton onClick={downgradePostVotes} id="updatePost" >
@@ -154,11 +155,16 @@ export default function Post(props) {
            { (byMe || props.owner) && <IconButton onClick={deletePost}>
             <Cancel style={{color:"red", marginLeft:"10px"}}/>
             </IconButton>}
+            </div>
         </div>
     )
 }
 const postStyle={
     width:"75vw",
+    maxWidth:"75vw",
+    display:"flex",
+   overflowWrap:"break-word",
+    whiteSpace:"nowrap", overflow:"auto", borderLeft:"1em solid transparent", borderRight:"1em solid transparent", textOverflow:"ellipsis",
     background:"#ededed",
     borderRadius:"10px",
     padding: "20px",
@@ -166,3 +172,6 @@ const postStyle={
     display:"flex",
     alignItems:"center"
 }
+// const calc=()=>{
+//   return 8 + (18.92 - 8) * ((100 - 10) / (75 - 10));
+// }
