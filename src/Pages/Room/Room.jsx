@@ -26,12 +26,19 @@ const [roomName, setRoomName]= useState("");
 const {roomid} = useParams();
 const [currentVotes, setCurrentVotes]= useState(0);
 const [currentPostId, setCurrentVotesId]= useState("");
+const [owner, setOwner]= useState("");
 
 
 useEffect(()=>{
     db.collection("rooms").doc(roomid).onSnapshot((snapshot)=>{
         if(snapshot.data()){
         setRoomName(snapshot.data().roomName)
+        if(snapshot.data().roomCreatedBy== props.user.email){
+            setOwner(true);
+        }
+        else{
+            setOwner(false)
+        }
         }
         else{
             alert("NO ROOM EXISTS ON THE ENTERED ID");
@@ -89,8 +96,8 @@ const deleteRoom = ()=>{
    
     return (
         <div className="roomMain" style={{padding:"20px", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"  }}>
-           <Link to="/">
-           <Button onClick={deleteRoom}>Delete Room</Button></Link>
+         {owner &&   <Link to="/" style={{textDecoration:"none"}}>
+           <Button onClick={deleteRoom} style={{background:"red", color:"white", marginBottom:"5px"}}>Close Room</Button></Link>}
            <div className="roomHeader" style={roomHeaderStyle}>
                  <h1>Room ID: {roomid} </h1>
     <h1 style={{marginLeft:"auto"}}>{`**${roomName}**`}</h1>           
@@ -98,7 +105,7 @@ const deleteRoom = ()=>{
            <div className="roomContent" style={roomContentStyle}>
               {posts.map((currentPostData)=>{
                      
-                return   <Post message={currentPostData.post} votes={currentPostData.votes} id={currentPostData.id} roomid={roomid} user={props.user} upvotedBy={currentPostData.upvotedBy} downgradedBy={currentPostData.downgradedBy} createdBy={currentPostData.createdBy}  />
+                return   <Post message={currentPostData.post} votes={currentPostData.votes} id={currentPostData.id} roomid={roomid} user={props.user} upvotedBy={currentPostData.upvotedBy} downgradedBy={currentPostData.downgradedBy} createdBy={currentPostData.createdBy} owner={owner}  />
               })}
            </div>
            <div className="roomFooter" style={roomFooterStyle}>
