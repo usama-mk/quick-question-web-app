@@ -68,6 +68,7 @@ const handleNewPost = (e)=>{
 
 const postToDb=()=>{
      // push newPost to db
+     if( document.getElementById("postButton").disabled != true){
      const ref = db.collection('rooms').doc(roomid).collection("posts").doc()
      console.log(ref.id)  // prints the unique id
 
@@ -86,7 +87,17 @@ const postToDb=()=>{
 
     // })
     setNewPost("");
+    submitPoll();
+     }
 }
+function submitPoll(){
+    document.getElementById("postButton").disabled = true;
+    document.getElementById("postButton").style.backgroundColor="grey";
+    setTimeout(function(){document.getElementById("postButton").disabled = false;
+    document.getElementById("postButton").style.backgroundColor="#de6310";
+},30000);
+}
+
 const history = useHistory()
 const deleteRoom = ()=>{
     if (window.confirm('Are you sure you want to end this Session/Room?')) {
@@ -137,7 +148,7 @@ const deleteRoom = ()=>{
                         value={newPost}
                         onChange={handleNewPost}
                     />
-                 <Button style={submitButtonStyle} onClick={postToDb}>Submit</Button>
+                 <Button  id="postButton" style={submitButtonStyle} onClick={postToDb}>Submit</Button>
            </div>
         </div>
     )
@@ -155,7 +166,6 @@ const roomHeaderStyle=
 }
 const roomFooterStyle=
 {display:"flex",
-  
   backgroundColor:"#ededed", 
   padding:"20px", 
   borderRadius:"20px",
