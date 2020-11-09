@@ -1,6 +1,6 @@
 import { Button, TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import Post from '../../Components/Post'
 import { db } from '../../firebase';
 
@@ -41,6 +41,7 @@ useEffect(()=>{
         }
         }
         else{
+            history.push("/")
             alert("NO ROOM EXISTS ON THE ENTERED ID");
         }
         db.collection("rooms").doc(roomid).collection("posts").orderBy("votes", "desc").onSnapshot((snapshot)=>
@@ -86,18 +87,32 @@ const postToDb=()=>{
     // })
     setNewPost("");
 }
-
+const history = useHistory()
 const deleteRoom = ()=>{
-    db.collection("rooms").doc(roomid).delete();
-    //  link to home
+    if (window.confirm('Are you sure you want to end this Session/Room?')) {
+        db.collection("rooms").doc(roomid).delete().then(()=>{
+            history.push("/");
+           
+        }).then(()=>{
+            history.go(0)
+        })
+        //  link to home
+      
+        
+      } else {
+        // Do nothing!
+        
+        
+      }
+   
 }
 
 
    
     return (
         <div className="roomMain" style={{padding:"20px", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"  }}>
-         {owner &&   <Link to="/" style={{textDecoration:"none"}}>
-           <Button onClick={deleteRoom} style={{background:"red", color:"white", marginBottom:"5px"}}>Close Room</Button></Link>}
+         {owner &&   
+           <Button onClick={deleteRoom} style={{background:"red", color:"white", marginBottom:"5px"}}>Close Room</Button>}
            <div className="roomHeader" style={roomHeaderStyle}>
                  <h1>Room ID: {roomid} </h1>
     <h1 style={{marginLeft:"auto"}}>{`**${roomName}**`}</h1>           
@@ -135,7 +150,8 @@ const roomHeaderStyle=
   backgroundColor:"#ededed", 
   padding:"5px", 
   borderRadius:"20px",
-   width:"80vw"
+   width:"80vw",
+   
 }
 const roomFooterStyle=
 {display:"flex",
@@ -143,7 +159,9 @@ const roomFooterStyle=
   backgroundColor:"#ededed", 
   padding:"20px", 
   borderRadius:"20px",
-   width:"80vw"
+   width:"80vw",
+   position:"fixed",
+   bottom:"2vh"
 }
 const roomContentStyle={
     padding:"10px",
@@ -153,7 +171,8 @@ const roomContentStyle={
     width:"80vw",
     display:"flex",
     flexDirection:"column",
-    alignItems:"center"
+    alignItems:"center",
+    marginBottom:"16vh"
 }
 const submitButtonStyle={marginLeft:"auto",
  backgroundColor:"#de6310", 

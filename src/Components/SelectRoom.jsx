@@ -70,7 +70,7 @@ history.push(pageURL);
         <div style={{width:"100%", padding:"5%"}}>
             <h2 style={{color:"#4b5a6c"}}>Join Room Live:</h2>
             
-            <div className="form">
+            <div className="form"  style={{width:"100%", padding:"5%"}}>
             
                     <TextField
                         variant="outlined"
