@@ -7,26 +7,21 @@ export default function Post(props) {
     const[message, setMessage]= useState(props.message);
     const[votes, setVotes]= useState(props.votes);
     const[downArrow, setDownArrow]= useState(true);
-    
+    const [byMe, setByMe]= useState("");
 
     useEffect(()=>{
         
-        //  const tempArr = props.downgradedBy;
-        //  console.log(tempArr)
-        //  if(tempArr != null){
-        //     console.log(tempArr.length)
-        //     for(var i = 0; i < tempArr.length; i++) {
-        //         if(tempArr[i]==props.user.email){
-        //             setDownArrow(false);
-        //             break;
-        //         }      
-        //     }
-        //  }
+      if(props.createdBy==props.user.email){
+        setByMe(true);
+      }
+      else{
+        setByMe(false);
+      }
         
                  
              
          
-    },[])
+    },[props.createdBy])
 
     const updatePostVotes=()=>{
         var alreadyVoted="";
@@ -156,9 +151,9 @@ export default function Post(props) {
         {downArrow && <IconButton onClick={downgradePostVotes} id="updatePost" >
             <ArrowDownward style={{color: "#de6310"}} />
             </IconButton> }    
-            <IconButton onClick={deletePost}>
+           { byMe && <IconButton onClick={deletePost}>
             <Cancel style={{color:"red", marginLeft:"10px"}}/>
-            </IconButton>
+            </IconButton>}
         </div>
     )
 }

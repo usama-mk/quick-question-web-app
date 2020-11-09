@@ -27,6 +27,7 @@ const {roomid} = useParams();
 const [currentVotes, setCurrentVotes]= useState(0);
 const [currentPostId, setCurrentVotesId]= useState("");
 
+
 useEffect(()=>{
     db.collection("rooms").doc(roomid).onSnapshot((snapshot)=>{
         if(snapshot.data()){
@@ -97,7 +98,7 @@ const deleteRoom = ()=>{
            <div className="roomContent" style={roomContentStyle}>
               {posts.map((currentPostData)=>{
                      
-                return   <Post message={currentPostData.post} votes={currentPostData.votes} id={currentPostData.id} roomid={roomid} user={props.user} upvotedBy={currentPostData.upvotedBy} downgradedBy={currentPostData.downgradedBy}  />
+                return   <Post message={currentPostData.post} votes={currentPostData.votes} id={currentPostData.id} roomid={roomid} user={props.user} upvotedBy={currentPostData.upvotedBy} downgradedBy={currentPostData.downgradedBy} createdBy={currentPostData.createdBy}  />
               })}
            </div>
            <div className="roomFooter" style={roomFooterStyle}>
