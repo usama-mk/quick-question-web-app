@@ -42,7 +42,7 @@ useEffect(()=>{
         }
         else{
             history.push("/")
-            alert("NO ROOM EXISTS ON THE ENTERED ID");
+            // alert("NO ROOM EXISTS ON THE ENTERED ID");
         }
         db.collection("rooms").doc(roomid).collection("posts").orderBy("votes", "desc").onSnapshot((snapshot)=>
         { 
