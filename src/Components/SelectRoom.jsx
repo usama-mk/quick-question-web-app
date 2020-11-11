@@ -85,12 +85,12 @@ history.push(pageURL);
                         value={roomID}
                         onChange={handleRoomID}
                     />
-                    <div style={{display:"flex", justifyContent:"flex-end", marginTop:"5px"}}>
+                    <div style={{display:"flex", justifyContent:"flex-start", marginTop:"5px"}}>
                         <Button style={{color:"red", backgroundColor:"#f8bc5d"}} onClick={()=>{joinRoom("/room")}} >Join Room</Button>
                     </div>
                     <p className="errorMsg">{Emailerror}</p>
                     <h3 style={{textAlign:"center", color:"#4b5a6c"}} >OR:</h3>
-                    <h2 style={{color:"#4b5a6c"}}>Open a new Room:</h2>
+                    <h2 style={{color:"#4b5a6c", marginBottom:"15px"}}>Open a new Room:</h2>
                     <TextField
                         variant="outlined"
                         
@@ -104,7 +104,7 @@ history.push(pageURL);
                         value={roomName}
                         onChange={handleRoomName}
                     />
-                    <div style={{display:"flex", justifyContent:"flex-end", marginTop:"5px"}}>
+                    <div style={{display:"flex", justifyContent:"flex-start", marginTop:"5px"}}>
                         <Button style={{color:"red", backgroundColor:"#f8bc5d"}} onClick={()=>{openRoom("/room")}}>Open Room</Button>
                     </div>
                     

@@ -29,7 +29,7 @@ export default function Home(props) {
 
             <div style={{width:"50%", height:"100%" , minHeight:"100%", padding:"3%"}} className="RightHome">
                 <h1 style={{color:"#4b5a6c"}}>
-                {props.user? <h2>Enter Room:</h2> : <h2>Log In:</h2> }
+                {props.user? <h2>Enter Room:</h2> : <h2>Log In / Sign Up:</h2> }
                 </h1>
               <div   style={{display:"flex" , flexDirection:"column",  alignItems:"flex-start", justifyContent:"center" , backgroundColor:"#fbe2a0" }}>
                  {props.user? <SelectRoom user={props.user}/> :<Login/>}

@@ -61,7 +61,7 @@ const Header=(props)=> {
   // const history = useHistory()
   const handleButtonClick = (pageUrl) => {
     history.push(pageUrl);
-    history.go(0)
+    // history.go(0)
     setAnchorEl(null);
   };
 

@@ -104,9 +104,7 @@ const deleteRoom = ()=>{
         db.collection("rooms").doc(roomid).delete().then(()=>{
             history.push("/");
            
-        }).then(()=>{
-            history.go(0)
-        })
+        }) 
         //  link to home
       
         
