@@ -1,4 +1,4 @@
-import { Button, TextField } from '@material-ui/core';
+import { Button, Container, TextField } from '@material-ui/core';
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom';
 import { db } from '../firebase';
@@ -67,7 +67,7 @@ history.push(pageURL);
 }
 
     return (
-        <div style={{width:"100%", padding:"5%"}}>
+        <Container component="main" maxWidth="xs">
             <h2 style={{color:"#4b5a6c"}}>Join Room Live:</h2>
             
             <div className="form"  style={{width:"100%", padding:"5%"}}>
@@ -110,7 +110,7 @@ history.push(pageURL);
                     
             </div>
             
-        </div>
+        </Container>
     )
 }
 export default withRouter(SelectRoom);
