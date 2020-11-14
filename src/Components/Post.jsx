@@ -29,7 +29,7 @@ export default function Post(props) {
             if(doc.data().upvotedBy != null) {
                for(var i = 0; i < doc.data().upvotedBy.length; i++) {
                    if(doc.data().upvotedBy[i]==props.user.email){
-                    console.log("voters check")
+                    console.log("voters check true: already voted")
                     alreadyVoted=true;
                      setDownArrow(true);
                      setUpArrow(false)
@@ -61,6 +61,8 @@ export default function Post(props) {
     },[props.createdBy, upArrow, downArrow])
 
     const updatePostVotes=()=>{
+      setDownArrow(true);
+      setUpArrow(false);
         var alreadyVoted="";
         console.log("in update votes method")
         //retrieve posts and check if the user has upvoted already
@@ -70,7 +72,7 @@ export default function Post(props) {
             if(doc.data().upvotedBy != null) {
                for(var i = 0; i < doc.data().upvotedBy.length; i++) {
                    if(doc.data().upvotedBy[i]==props.user.email){
-                    console.log("voters check")
+                    console.log("voters check already voted")
                     alreadyVoted=true;
                    
                     break;
@@ -91,8 +93,7 @@ export default function Post(props) {
               })
 
             }
-            setDownArrow(true);
-
+           
 
             } 
             
@@ -148,6 +149,7 @@ export default function Post(props) {
                   downgradedBy: props.downgradedBy
               })
             setUpArrow(true);
+            setDownArrow(false);
             }
 
 
