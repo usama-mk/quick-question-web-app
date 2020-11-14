@@ -123,7 +123,8 @@ const deleteRoom = ()=>{
          {owner &&   
            <Button onClick={deleteRoom} style={{background:"red", color:"white", marginBottom:"5px"}}>Close Room</Button>}
            <div className="roomHeader" style={roomHeaderStyle}>
-                 <h1>Room ID: {roomid} </h1>
+                 <h1 style={{overflow:"auto",
+ flexWrap:"wrap",}}>Room ID: {roomid} </h1>
     <h1 style={{marginLeft:"auto"}}>{`**${roomName}**`}</h1>           
            </div>
            <div className="roomContent" style={roomContentStyle}>
@@ -154,8 +155,10 @@ const deleteRoom = ()=>{
 const roomHeaderStyle=
 {display:"flex",
  justifyContent:"space-between",
- overflowWrap:"break-word",
- whiteSpace:"nowrap", overflow:"auto", borderLeft:"1em solid transparent", borderRight:"1em solid transparent", textOverflow:"ellipsis",
+ overflow:"auto",
+ flexWrap:"wrap",
+//  overflowWrap:"break-word",
+//  whiteSpace:"nowrap", overflow:"auto", borderLeft:"1em solid transparent", borderRight:"1em solid transparent", textOverflow:"ellipsis",
   backgroundColor:"#ededed", 
   padding:"5px", 
   borderRadius:"20px",
