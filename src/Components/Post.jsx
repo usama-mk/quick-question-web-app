@@ -6,22 +6,59 @@ import { db } from '../firebase';
 export default function Post(props) {
     const[message, setMessage]= useState(props.message);
     const[votes, setVotes]= useState(props.votes);
-    const[downArrow, setDownArrow]= useState(true);
+    const[downArrow, setDownArrow]= useState(false);
+    const[upArrow, setUpArrow]= useState(false);
+
     const [byMe, setByMe]= useState("");
 
     useEffect(()=>{
         
       if(props.createdBy==props.user.email){
         setByMe(true);
-      }
+      } 
       else{
         setByMe(false);
       }
-        
+
+         var alreadyVoted="";
+        console.log("in update use effect method")
+        //retrieve posts and check if the user has upvoted already
+        db.collection("rooms").doc(props.roomid).collection("posts").doc(props.id).get()
+        .then(function(doc) {
+          if (doc.exists) {
+            if(doc.data().upvotedBy != null) {
+               for(var i = 0; i < doc.data().upvotedBy.length; i++) {
+                   if(doc.data().upvotedBy[i]==props.user.email){
+                    console.log("voters check")
+                    alreadyVoted=true;
+                     setDownArrow(true);
+                     setUpArrow(false)
+                    break;
+                   }
+               }
+               //If you write this function outside db.coll block it will cause problems, as db.coll takes time while executing data from db and hence alreadyVoted value doesn't update and it's already ran
+               if(!alreadyVoted){
+                
+                setDownArrow(false);
+                setUpArrow(true);
+
+            }
+
+
+            } 
+            
+             
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+        }).catch(function(error) {
+          console.log("Error getting document:", error);
+        });
                  
              
          
-    },[props.createdBy])
+    },[props.createdBy, upArrow, downArrow])
 
     const updatePostVotes=()=>{
         var alreadyVoted="";
@@ -35,11 +72,13 @@ export default function Post(props) {
                    if(doc.data().upvotedBy[i]==props.user.email){
                     console.log("voters check")
                     alreadyVoted=true;
+                   
                     break;
                    }
                }
                //If you write this function outside db.coll block it will cause problems, as db.coll takes time while executing data from db and hence alreadyVoted value doesn't update and it's already ran
                if(!alreadyVoted){
+                
                 //push his name into upvoters and make an upvote
               props.upvotedBy.push(props.user.email);
             const arrDowngradedBy=  props.downgradedBy.filter((voter)=> voter != props.user.email)
@@ -52,6 +91,7 @@ export default function Post(props) {
               })
 
             }
+            setDownArrow(true);
 
 
             } 
@@ -107,7 +147,7 @@ export default function Post(props) {
                   upvotedBy: arrUpvotedBy,
                   downgradedBy: props.downgradedBy
               })
-
+            setUpArrow(true);
             }
 
 
@@ -147,9 +187,9 @@ export default function Post(props) {
             
             <div className="message-options" style={msgOptionsStyle} >
               <h3 style={{marginLeft:"auto", color:"#de6310", padding:"5px"}}>{props.votes}</h3>
-            <IconButton style={{marginLeft:"5px"}} onClick={updatePostVotes} id="updatePost" >
+            {upArrow && <IconButton style={{marginLeft:"5px"}} onClick={updatePostVotes} id="updatePost" >
             <ArrowUpward style={{color: "#de6310"}} />
-            </IconButton>
+            </IconButton>}
         {downArrow && <IconButton onClick={downgradePostVotes} id="updatePost" >
             <ArrowDownward style={{color: "#de6310"}} />
             </IconButton> }    
