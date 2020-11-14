@@ -144,8 +144,9 @@ export default function Post(props) {
     return (
         <div className="postComponent" style={postStyle}>
             <h3 style={{ marginRight:"auto", overflow:"auto" ,overflowWrap:"break-word"}}> {props.message}</h3>
-            <h3 style={{marginLeft:"auto", color:"#de6310", padding:"5px"}}>{props.votes}</h3>
-            <div className="message-options" >
+            
+            <div className="message-options" style={msgOptionsStyle} >
+              <h3 style={{marginLeft:"auto", color:"#de6310", padding:"5px"}}>{props.votes}</h3>
             <IconButton style={{marginLeft:"5px"}} onClick={updatePostVotes} id="updatePost" >
             <ArrowUpward style={{color: "#de6310"}} />
             </IconButton>
@@ -174,6 +175,12 @@ const postStyle={
     margin:"10px",
     display:"flex",
     alignItems:"center"
+}
+
+const msgOptionsStyle={
+  marginLeft:"auto",
+  display:"flex",
+  flexWrap:"wrap",
 }
 // const calc=()=>{
 //   return 8 + (18.92 - 8) * ((100 - 10) / (75 - 10));
