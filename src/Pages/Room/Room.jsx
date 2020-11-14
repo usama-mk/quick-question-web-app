@@ -24,15 +24,19 @@ const [newPost, setNewPost]= useState("");
 const [posts, setPosts]= useState([]);
 const [roomName, setRoomName]= useState("");
 const {roomid} = useParams();
+// const roomid = roomid.substring(0, roomid.length-6);
+const [roomidForUser, setRoomidForUser] = useState("");
 const [currentVotes, setCurrentVotes]= useState(0);
 const [currentPostId, setCurrentVotesId]= useState("");
 const [owner, setOwner]= useState("");
 
 
 useEffect(()=>{
+    // console.log(`room id for user: ${roomidForUser} FB roomid: ${roomid}`)
     db.collection("rooms").doc(roomid).onSnapshot((snapshot)=>{
         if(snapshot.data()){
         setRoomName(snapshot.data().roomName)
+        setRoomidForUser(snapshot.data().idForRoom)
         if(snapshot.data().roomCreatedBy== props.user.email){
             setOwner(true);
         }
@@ -124,7 +128,7 @@ const deleteRoom = ()=>{
            <Button onClick={deleteRoom} style={{background:"red", color:"white", marginBottom:"5px"}}>Close Room</Button>}
            <div className="roomHeader" style={roomHeaderStyle}>
                  <h1 style={{overflow:"auto",
- flexWrap:"wrap",}}>Room ID: {roomid} </h1>
+ flexWrap:"wrap",}}>Room ID: {roomidForUser} </h1>
     <h1 style={{marginLeft:"auto"}}>{`**${roomName}**`}</h1>           
            </div>
            <div className="roomContent" style={roomContentStyle}>

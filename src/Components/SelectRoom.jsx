@@ -39,19 +39,22 @@ const [Emailerror, setEmailError] = useState("");
 // },[roomId]);
 
 const openRoom=(pageURL)=>{
+    const idForRoom= Math.floor(100000 + Math.random() * 900000).toString();
     if (roomName) {
         //some clever DB stuff
         db.collection('rooms').add({
             roomName: roomName,
-            roomCreatedBy: props.user.email
+            roomCreatedBy: props.user.email,
+            idForRoom: idForRoom,
         })
     }
     db.collection("rooms").get().then(function(querySnapshot) {
+     
         querySnapshot.forEach(function(doc) {
             // doc.data() is never undefined for query doc snapshots
             if(doc.data().roomName==roomName){
         //    setRoomID(doc.id);  don't set it instantly and causes problems
-           alert(`your room id is:${doc.id}`)
+           alert(`your room id is:${idForRoom}`)
            pageURL= `${pageURL}/${doc.id}`;
            history.push(pageURL);
                        }
@@ -62,8 +65,24 @@ const openRoom=(pageURL)=>{
 }
 
 const joinRoom=(pageURL)=>{
-   pageURL= `${pageURL}/${roomID}`;
-history.push(pageURL);
+    var idForRoom="";
+  //get Firebase collection id for the entered roomID(by user)
+  db.collection("rooms").where("idForRoom", "==", roomID).get()
+  .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+          // doc.data() is never undefined for query doc snapshots
+          idForRoom= doc.id;
+          console.log(idForRoom)
+          pageURL= `${pageURL}/${idForRoom}`;
+      });
+      history.push(pageURL);
+  })
+  .catch(function(error) {
+      console.log("Error getting documents: ", error);
+  });
+
+
+  
 }
 
     return (
