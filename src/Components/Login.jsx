@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
+        
     },
     submit: {
         marginTop: '5px',
@@ -140,7 +141,7 @@ const loginWIthGoogle=()=>{
 }
 
     return (
-        <div style={{width:"100%"}}>
+        <div  style={{width:"100%"}}>
             { 
             
             <Container component="main" maxWidth="xs">
