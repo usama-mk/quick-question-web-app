@@ -97,9 +97,18 @@ const postToDb=()=>{
 function submitPoll(){
     document.getElementById("postButton").disabled = true;
     document.getElementById("postButton").style.backgroundColor="grey";
-    setTimeout(function(){document.getElementById("postButton").disabled = false;
-    document.getElementById("postButton").style.backgroundColor="#de6310";
-},30000);
+    
+        setTimeout(function(){
+            console.log("in settime out funtion")
+            if(document.getElementById("postButton")){
+                console.log("set time out executed, switch on submit button")
+            document.getElementById("postButton").disabled = false;
+        document.getElementById("postButton").style.backgroundColor="#de6310";
+            }
+    }
+    ,8000);
+     
+    
 }
 
 const history = useHistory()
