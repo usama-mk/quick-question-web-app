@@ -195,7 +195,7 @@ export default function Post(props) {
         {downArrow && <IconButton onClick={downgradePostVotes} id="updatePost" >
             <ArrowDownward style={{color: "#de6310"}} />
             </IconButton> }    
-           { (byMe || props.owner) && <IconButton onClick={deletePost}>
+           { (byMe || props.owner) && <IconButton style={{height:"62px", width:"66px", paddingRight:"22px"}} onClick={deletePost}>
             <Cancel style={{color:"red", marginLeft:"10px"}}/>
             </IconButton>}
             </div>

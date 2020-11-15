@@ -19,8 +19,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  hover: {
+    "&:hover": {
+      
+    }
+  },
   menuButton: {
     marginRight: theme.spacing(1),
+    
   },
   title: {
     [theme.breakpoints.down("xs")]:{
@@ -84,7 +90,7 @@ const Header=(props)=> {
   
       <AppBar style={{backgroundColor:"#fbe2a0"}} position="static">
         <Toolbar>
-        <IconButton  edge="start" className={classes.menuButton} 
+        <Button   edge="start" className={classes.hover} 
               color="inherit" aria-label="menu" 
               onClick={()=> handleButtonClick('/')}
               >
@@ -98,7 +104,7 @@ const Header=(props)=> {
                 
             
           </Typography>
-            </IconButton>
+            </Button>
           
          
             
@@ -170,5 +176,11 @@ const Header=(props)=> {
       </AppBar>
     </div>
   );
+}
+const iconButtonStyles={
+  backgroundColor:"transparent",
+  '&:hover':{
+    backgroundColor:"red"
+  }
 }
 export default withRouter(Header);

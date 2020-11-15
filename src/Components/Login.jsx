@@ -206,16 +206,14 @@ const loginWIthGoogle=()=>{
               OR:
           </h2>
           </div>
-        
-        <div onClick={loginWIthGoogle} style={{backgroundColor:"white", height:"40px",   display:"flex", justifyContent:"center", alignItems:"center" }}>
-            <IconButton size="small">
+          <Button style={{justifyContent:"center", height:"40px", width:"100%"}} size="small">
+        <div onClick={loginWIthGoogle} style={{backgroundColor:"white", height:"40px",width:"100%",   display:"flex", justifyContent:"center", alignItems:"center" }}>
             <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png" width="20" height="20" style={{marginRight:"15px"}}  alt="Google Logo"/>
          <h4>
               {signup?'Login with Google': 'Login with Google'}
           </h4>
-            </IconButton>
-        
          </div>
+         </Button>
        
                     { <Grid container>
                         {/* <Grid item xs>
